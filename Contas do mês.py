@@ -1,23 +1,23 @@
 #! python3
 
-# Algortimo para calcular as contas do mês
-# Colocar os valores pagos por cada um e o algoritmo calcula quanto e quem está devendo para quem.
+'''Algorithm that takes names and value inputs to calculate the division between two people on the monthly expenses
+You will have to insert the people's names and the values each one paid in EasyGUI and the algorithm will calculate
+the total expenses of each one and the combined  expenses and also who should pay who and the amount.'''
 
 import datetime
 import easygui
 
+# Today's date and its conversion to the calendar type used in Brazil
+
 var_today = datetime.datetime.today()
 var_today = datetime.datetime.strftime(var_today, '%d-%m-%Y')
 
-# Input the amount of people that paid something
-
-
-# Input the name of the people that paid
+# Input the name of the TWO people that paid something
 
 name_1 = easygui.enterbox("First person that paid:")
 name_2 = easygui.enterbox("Second person that paid:")
 
-# Creation of lists with the values that were paid
+# Creation of lists with the values that were paid using user input in EasyGUI
 
 list_name_1 = easygui.enterbox("How much did " + name_1 + " paid?")
 list_name_1 = list_name_1.split()
@@ -28,6 +28,7 @@ list_name_2 = list_name_2.split()
 list_name_2 = [int(i) for i in list_name_2]
 
 # Algorithm to calculate the total for each person.
+
 total = sum(list_name_1) + sum(list_name_2)
 total_div = total / 2
 tt_name_1 = total_div - sum(list_name_2)
