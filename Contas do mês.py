@@ -4,39 +4,51 @@
 # Colocar os valores pagos por cada um e o algoritmo calcula quanto e quem está devendo para quem.
 
 import datetime
+import easygui
 
-dia_de_hoje = datetime.datetime.today()
-dia_de_hoje = datetime.datetime.strftime(dia_de_hoje, '%d-%m-%Y')
+var_today = datetime.datetime.today()
+var_today = datetime.datetime.strftime(var_today, '%d-%m-%Y')
 
-# Criação de listas com os valores de pagamentos.
-print('Quais são os valores que a Paola pagou?')
-listpaola = [int(x) for x in input().split()]
+# Input the amount of people that paid something
 
-print('Quais são os valores que o Arthur pagou?')
-listarthur = [int(x) for x in input().split()]
 
-# Cálculo dos totais para cada um.
-total = sum(listarthur) + sum(listpaola)
-totaldiv = total / 2
-ttpaola = totaldiv - sum(listpaola)
+# Input the name of the people that paid
 
-# Mostra os totais no console.
-print('Total da Paloa é ' + str(sum(listpaola)))
-print('Total do Arthur é ' + str(sum(listarthur)))
-print('Total do mês é ' + str(total))
+name_1 = easygui.enterbox("First person that paid:")
+name_2 = easygui.enterbox("Second person that paid:")
 
-# Final, mostra quem deve para quem de acordo com os calculos anteriores.
-if ttpaola > 0:
-    print('A Paola deve ' + str(ttpaola) + ' para o Arthur')
+# Creation of lists with the values that were paid
+
+list_name_1 = easygui.enterbox("How much did " + name_1 + " paid?")
+list_name_1 = list_name_1.split()
+list_name_1 = [int(i) for i in list_name_1]
+
+list_name_2 = easygui.enterbox("How much did " + name_2 + " paid?")
+list_name_2 = list_name_2.split()
+list_name_2 = [int(i) for i in list_name_2]
+
+# Algorithm to calculate the total for each person.
+total = sum(list_name_1) + sum(list_name_2)
+total_div = total / 2
+tt_name_1 = total_div - sum(list_name_2)
+
+if tt_name_1 < 0:
+    owe_message = (name_1 + " owe " + str(-tt_name_1) + " to " + name_2)
 else:
-    print('O Arthur deve ' + str(-ttpaola) + ' para a Paola')
+    owe_message = (name_2 + " owe " + str(tt_name_1) + " to " + name_1)
 
-linhas = ['\n', 'Data fechamento ' + str(dia_de_hoje), 'O total da Paola no mês foi: ' + str(ttpaola), 'O total do Arthur no mês foi: ' + str(sum(listarthur)), 'O total gasto no mês foi: ' + str(total)]
-contas_do_mes_log = open('C:\\Users\\tuilu\\Documents\\Contas do mês\\ResumoContas.txt', 'a')
+# Shows the totals in a message box.
 
-for line in linhas:
-    contas_do_mes_log.write(line)
-    contas_do_mes_log.write('\n')
+easygui.msgbox("The total paid by " + str(name_1) + " is " + str(sum(list_name_1)) + "\nThe total paid by " + str(name_2) + " is " + str(sum(list_name_2)) + "\nThe monthly total expenses were " + str(total) + "\n\n" + owe_message)
+
+# Logs the totals into a TXT file
+
+line_message = ['\n', 'Closing date ' + str(var_today), "The total that " + str(name_1) + " paid this month was: " + str(sum(list_name_1)), 'The total that ' + str(name_2) + ' paid this month was: ' + str(sum(list_name_2)),  'Total spent this month was : ' + str(total)]
+monthly_expenses_log = open('C:\\Users\\tuilu\\Documents\\Contas do mês\\ResumoContas.txt', 'a')
+
+for line in line_message:
+    monthly_expenses_log.write(line)
+    monthly_expenses_log.write('\n')
 
 
-contas_do_mes_log.close()
+monthly_expenses_log.close()
